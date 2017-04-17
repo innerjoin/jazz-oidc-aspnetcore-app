@@ -76,6 +76,12 @@ namespace JazzOIDC
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            OpenIdConnectOptions config = new OpenIdConnectOptions {
+                ClientId = Configuration["ClientId"],
+                ClientSecret = Configuration["ClientSecret"],
+                Authority = Configuration["Authority"],
+            };
+            app.UseOpenIdConnectAuthentication(config);
 
             app.UseMvc(routes =>
             {
