@@ -39,7 +39,15 @@ Installation of Jazz Authorization Server creates a directory that is named Jazz
  - Right-click on "Trusted Root Certification Authoritites" > "All tasks" > "Import"
  - Browse to the crt file and then keep pressing "Next" to complete the wizard
  - Restart Docker for Windows
-
+IF the user under which IIS runs is different from the local user, do the following:
+1. Start > type mmc in the run prompt
+2. This will bring up Microsoft Management Console.
+3. Select File > Add/Remove Snap-In
+4. Select Certificates > Add
+5. Select Computer Account
+6. Select Local Computer
+7. Select Finsh and OK
+[Source](https://answers.microsoft.com/en-us/windows/forum/windows_xp-security/certmgrmsc-add-certificate-for-all-users-on-a/8992e277-9ab8-439b-8559-226ae9518ea0)
 
 DOCS:
 https://www.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/com.ibm.websphere.wlp.doc/ae/twlp_client_registration.html?cp=SSEQTP_8.5.5
