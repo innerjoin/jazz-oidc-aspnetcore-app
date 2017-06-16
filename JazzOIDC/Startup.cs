@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using JazzOIDC.Data;
 using JazzOIDC.Models;
 using JazzOIDC.Services;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Collections.Generic;
 
 namespace JazzOIDC
 {
@@ -71,12 +73,22 @@ namespace JazzOIDC
 
             app.UseIdentity();
 
+            List<string> issuers = new List<string> {
+                Configuration["BaseUri"] + Configuration["Endpoint"],
+                Configuration["BaseUri"] + ":" + Configuration["Port"] + Configuration["Endpoint"]
+            };
+
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
             OpenIdConnectOptions config = new OpenIdConnectOptions
             {
                 ClientId = Configuration["ClientId"],
                 ClientSecret = Configuration["ClientSecret"],
-                Authority = Configuration["Authority"],
+                Authority = Configuration["BaseUri"] + Configuration["Endpoint"],
+                ResponseType = OpenIdConnectResponseType.Code,
+                GetClaimsFromUserInfoEndpoint = true,
+                TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters{
+                    ValidIssuers = issuers
+                },
             };
             app.UseOpenIdConnectAuthentication(config);
 

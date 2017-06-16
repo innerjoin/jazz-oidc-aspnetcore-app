@@ -16,6 +16,12 @@ Installation: Simply follow the wizzard
 Download from: https://jazz.net/downloads/rational-team-concert/releases/6.0.3/JazzAuthServer-offering-repo-6.0.3.zip
 Follow the wizzard to install JAS
 
+### Patch JAS
+As for 6.0.3 and 6.0.4 RC1, there was an issue where JWK was not enabled by default. To fix this, please change the `openidConnectProvider` tag under `<JAS>\wlp\usr\servers\jazzop\appConfig.xml` to
+
+> <openidConnectProvider id="jazzop" oauthProviderRef="JazzOP"
+sessionManaged="true" signatureAlgorithm="RS256" jwkEnabled="true"/>
+
 ### Run JAS
  - open command line as administrator and navigate to the folder where JAS is installed
  - execute `start-jazz.bat`
@@ -55,36 +61,64 @@ https://www.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/com.ibm.websphere.wlp.d
 HTTP POST:
 https://localhost:9643/oidc/endpoint/jazzop/registration
 
-Headers:
-Content-Type: application/json
-Accept: application/json
+**Headers**<br/>
+Content-Type: application/json<br/>
+Accept: application/json<br/>
 
 Content:
-{
+```json
+{ 
   "client_name":"OIDC Test",
-  "redirect_uris": [
-    "http://localhost:5000//signin-oidc"
-  ]
+  "scope": "ALL_SCOPES",
+  "redirect_uris": [ 
+      "http://localhost:7374/signin-oidc",
+      "https://localhost:44391/signin-oidc"
+  ],
+   "grant_types":[
+      "authorization_code",
+      "client_credentials",
+      "implicit",
+      "refresh_token",
+      "urn:ietf:params:oauth:grant-type:jwt-bearer"
+   ],
+   "response_types":[
+      "code",
+      "token",
+      "id_token token"
+   ],
+   "application_type":"web",
+   "introspect_tokens":true
 }
+```
 
-Response:
+**Response**
+```json
 {
-  "client_id_issued_at": 1492360673,
-  "registration_client_uri": "https://localhost:9643/oidc/endpoint/jazzop/registration/9f0d79cda7e547d5b825acd6dcc1cff2",
-  "client_secret_expires_at": 0,
-  "token_endpoint_auth_method": "client_secret_basic",
-  "grant_types": [
-    "authorization_code"
-  ],
-  "response_types": [
-    "code"
-  ],
-  "application_type": "web",
-  "introspect_tokens": false,
-  "client_id": "9f0d79cda7e547d5b825acd6dcc1cff2",
-  "client_secret": "61wygoRzmbU35yL38aZkhaIO5VO6ZILPE5iclvFi1nfLWQgVHNNVhq52w8jJ",
-  "client_name": "OIDC Test with Redirect",
-  "redirect_uris": [
-    "http://localhost:5000/signin-oidc"
-  ]
+	"client_id_issued_at": 1497594910,
+	"registration_client_uri": "https://localhost:9643/oidc/endpoint/jazzop/registration/2a9c2623bde844c4b446e48d8a53c296",
+	"client_secret_expires_at": 0,
+	"token_endpoint_auth_method": "client_secret_basic",
+	"scope": "ALL_SCOPES",
+	"grant_types": [
+	  "authorization_code",
+	  "client_credentials",
+	  "implicit",
+	  "refresh_token",
+	  "urn:ietf:params:oauth:grant-type:jwt-bearer"
+	],
+	"response_types": [
+	  "code",
+	  "token",
+	  "id_token token"
+	],
+	"application_type": "web",
+	"introspect_tokens": true,
+	"client_id": "2a9c48231b6bb4c4b566eaad8a53c2d6",
+	"client_secret": "9z6Ueq609xGIrVGq4562756ESvTmOkFEqye3eVS2c6GqFJqBLUrVbHFcVP88X",
+	"client_name": "OIDC Test",
+	"redirect_uris": [
+	  "http://localhost:7374/signin-oidc",
+	  "https://localhost:44391/signin-oidc"
+	],
 }
+```
