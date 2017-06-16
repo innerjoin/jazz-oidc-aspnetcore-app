@@ -1,6 +1,5 @@
 ﻿# Using Jazz Authorization Server as Identity Provider in ASP.NET Core
 First of all, I highly recommend to read [An introduction to OpenID Connect in ASP.NET Core]( https://andrewlock.net/an-introduction-to-openid-connect-in-asp-net-core/)
---> Ensure that you click the 'user secrets manager' link
 
 ## Installation
 The following installations are required:
@@ -54,10 +53,10 @@ IF the user under which IIS runs is different from the local user, do the follow
 7. Select Finsh and OK
 [Source](https://answers.microsoft.com/en-us/windows/forum/windows_xp-security/certmgrmsc-add-certificate-for-all-users-on-a/8992e277-9ab8-439b-8559-226ae9518ea0)
 
-##JAS Documentation
+## JAS Documentation
 The main [JAS API Documentation](https://www.ibm.com/support/knowledgecenter/SSEQTP_8.5.5/com.ibm.websphere.wlp.doc/ae/twlp_client_registration.html?cp=SSEQTP_8.5.5) is worth to be read.
 
-##Register Test App in JAS
+## Register Test App in JAS
 Run the below HTTP POST Request the the URL `https://localhost:9643/oidc/endpoint/jazzop/registration`. This will register our Application within JAS
 
 **Headers**<br/>
